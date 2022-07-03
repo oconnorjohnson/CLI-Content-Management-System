@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "console.table": "^0.10.0",
+    "ctable": "^0.0.3",
+    "dotenv": "^16.0.1",
+    "figlet": "^1.5.2",
     "inquirer": "^9.0.0",
     "mysql": "^2.18.1"
   }
