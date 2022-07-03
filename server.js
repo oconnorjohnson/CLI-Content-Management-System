@@ -6,9 +6,9 @@ const figlet = require('figlet');
 
 const connection = mysql.createConnection({
     host: 'localhost', 
-    port: 3001,
+    port: 3306,
     user: 'root', 
-    password: process.env.DB_PASSWORD, 
+    password: 'zubiezubiezoo22',
     database: 'employee_DB',
 });
 
@@ -48,13 +48,13 @@ function startPrompt() {
                 viewAll("DEPARTMENT");
                 break;
             case "Add employee":
-                addEmployee();
+                addNewEmployee();
                 break;
             case "Add role":
-                addRole();
+                addNewRole();
                 break;
             case "Add department":
-                addDepartment();
+                addNewDepartment();
                 break;
             case "Update role for employee":
                 updateRole();
@@ -63,7 +63,7 @@ function startPrompt() {
                 updateManager();
                 break;
             case "View employees by manager":
-                viewEmployeesByManager();
+                viewEmployeeByManager();
                 break;
             case "Delete department":
                 deleteDepartment();
@@ -180,7 +180,7 @@ const addNewRole = () => {
     });
   }
 
-  const addNewEmployee = () => {
+const addNewEmployee = () => {
     connection.query("SELECT * FROM EMPLOYEE", (err, emplRes) => {
       if (err) throw err;
       const employeeChoice = [
@@ -526,4 +526,48 @@ const deleteEmployee = () => {
         });
     });
 };
+
+const viewBudget = () => {
+    connection.query("SELECT * FROM DEPARTMENT", (err, res) => {
+        if (err) throw err;
+    
+        const depChoice = [];
+        res.forEach(({ name, id }) => {
+            depChoice.push({
+            name: name,
+            value: id
+            });
+    });
+  
+        let questions = [
+            {
+            type: "list",
+            name: "id",
+            choices: depChoice,
+            message: "which department's budget do you want to see?"
+            }
+        ];
+  
+        inquirer.prompt(questions)
+        .then(response => {
+            const query = `SELECT D.name, SUM(salary) AS budget FROM
+            EMPLOYEE AS E LEFT JOIN ROLE AS R
+            ON E.role_id = R.id
+            LEFT JOIN DEPARTMENT AS D
+            ON R.department_id = D.id
+            WHERE D.id = ?
+            `;
+            connection.query(query, [response.id], (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            startPrompt();
+            });
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    });
+  
+  };
+  
   
