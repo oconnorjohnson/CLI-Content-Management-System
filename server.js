@@ -96,10 +96,10 @@ const viewAll = (table) => {
         ON R.department_id = D.id;`;
     } else {
         query = `SELECT E.id AS id, E.first_name AS first_name, E.last_name AS last_name, 
-        R.title AS role, D.name AS department, CONCAT(M.fisrt_name, " ", M.last_name) AS manager
+        R.title AS role, D.name AS department, CONCAT(M.first_name, " ", M.last_name) AS manager
         FROM EMPLOYEE AS E LEFT JOIN ROLE AS R ON E.role_id = R.id
-        LEFT JOIN DEPARTMENT AS D ON R.depart_id = D.id
-        LEFT JOIN EMPLOYEE AS M ON E.manage_id = M.id;`;
+        LEFT JOIN DEPARTMENT AS D ON R.department_id = D.id
+        LEFT JOIN EMPLOYEE AS M ON E.manager_id = M.id;`;
     }
     connection.query(query, (err, res) => {
         if (err) throw err; 
@@ -122,7 +122,7 @@ const addNewDepartment = () => {
         const query = `INSERT INTO department (name) VALUES (?)`;
         connection.query(query, [response.name], (err, res) => {
             if (err) throw err; 
-            console.log(`Successfully inserted ${respone.name} department as id ${res.insertId}`);
+            console.log(`Successfully inserted ${response.name} department as id ${res.insertId}`);
             startPrompt();
         });
     })
