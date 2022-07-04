@@ -17,7 +17,6 @@ npm install
 ```javascript
 const connection
 ```
-  to match your MySQL database password
 - Create schema of database tables running all queries in ```schema.sql```
 - Run queries in ```seed.sql``` or set up test records yourself
 
