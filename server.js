@@ -11,8 +11,7 @@ const connection = mysql.createConnection({
     password: 'zubiezubiezoo22',
     database: 'employee_DB',
 });
-
-// Connect to database 
+ 
 connection.connect((err) => {
     if (err) throw err; 
     console.log(`connected as id ${connection.threadId}\n`);
@@ -30,7 +29,7 @@ function startPrompt() {
     const startQuestion = [{
         type: "list", 
         name: "action", 
-        meessage: "what would you like to do?",
+        meessage: "Select action",
         loop: false, 
         choices: ["View all employees", "View all roles", "View all departments", "Add employee", "Add role", "Add department", "Update role for employee", "Update employee's manager", "View employees by manager", "Delete department", "Delete role", "Delete employee", "View total labor budget of department", "Quit"]
     }]
@@ -114,7 +113,7 @@ const addNewDepartment = () => {
         {
             type: "input",
             name: "name",
-            message: "What is the department name?"
+            message: "Enter department"
         }
     ];
     inquirer.prompt(questions)
@@ -132,7 +131,6 @@ const addNewDepartment = () => {
 }
 
 const addNewRole = () => {
-    //get the list of all department with department_id to make the choices object list for prompt question
     const departments = [];
     connection.query("SELECT * FROM DEPARTMENT", (err, res) => {
       if (err) throw err;
@@ -145,23 +143,22 @@ const addNewRole = () => {
         departments.push(qObj);
       });
   
-      //question list to get arguments for making new roles
       let questions = [
         {
           type: "input",
           name: "title",
-          message: "What is the title of the new role?"
+          message: "Enter title"
         },
         {
           type: "input",
           name: "salary",
-          message: "What is the salary of the new role?"
+          message: "Enter salary"
         },
         {
           type: "list",
           name: "department",
           choices: departments,
-          message: "Which department is this role in?"
+          message: "Select department"
         }
       ];
   
@@ -210,24 +207,24 @@ const addNewEmployee = () => {
           {
             type: "input",
             name: "first_name",
-            message: "what is the employee's first name?"
+            message: "Enter employee's first name"
           },
           {
             type: "input",
             name: "last_name",
-            message: "what is the employee's last name?"
+            message: "Enter employee's last name"
           },
           {
             type: "list",
             name: "role_id",
             choices: roleChoice,
-            message: "what is the employee's role?"
+            message: "Select employee's role"
           },
           {
             type: "list",
             name: "manager_id",
             choices: employeeChoice,
-            message: "who is the employee's manager? (could be null)"
+            message: "Enter employee's manager, if they have one"
           }
         ]
     
@@ -274,13 +271,13 @@ const updateRole = () => {
             type: "list",
             name: "id",
             choices: employeeChoice,
-            message: "whose role do you want to update?"
+            message: "Select employee to update role"
           },
           {
             type: "list",
             name: "role_id",
             choices: roleChoice,
-            message: "what is the employee's new role?"
+            message: "Select employee's new role"
           }
         ]
     
@@ -324,7 +321,7 @@ const viewEmployeeByManager =  () => {
                 type: "list",
                 name: "manager_id",
                 choices: employeeChoice,
-                message: "whose role do you want to update?"
+                message: "Select role to update"
             },
         ]
     
@@ -386,13 +383,13 @@ const updateManager = ()=> {
                 type: "list",
                 name: "id",
                 choices: employeeChoice,
-                message: "who do you want to update?"
+                message: "Select employee to update"
             },
             {
                 type: "list",
                 name: "manager_id",
                 choices: managerChoice,
-                message: "whos is the employee's new manager?"
+                message: "Select employee's manager"
             }
         ]
     
@@ -435,7 +432,7 @@ const deleteDepartment = () => {
             type: "list",
             name: "id",
             choices: departments,
-            message: "which department do u want to delete?"
+            message: "select department to delete"
         }
     ];
   
@@ -472,7 +469,7 @@ const deleteRole = () => {
             type: "list",
             name: "id",
             choices: roleChoice,
-            message: "which role do u want to delete?"
+            message: "select role to delete"
         }
       ];
   
@@ -508,7 +505,7 @@ const deleteEmployee = () => {
             type: "list",
             name: "id",
             choices: employeeChoice,
-            message: "which employee do u want to delete?"
+            message: "Select employee to delete"
             }
         ];
   
@@ -544,7 +541,7 @@ const viewBudget = () => {
             type: "list",
             name: "id",
             choices: depChoice,
-            message: "which department's budget do you want to see?"
+            message: "Select the department to view budget"
             }
         ];
   
