@@ -15,7 +15,7 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
     if (err) throw err; 
     console.log(`connected as id ${connection.threadId}\n`);
-    figlet('Employee tracker', function(err, data) {
+    figlet('Employee Roster', function(err, data) {
         if (err) {
             console.log('ASCII art NOT loaded...');
         } else {
