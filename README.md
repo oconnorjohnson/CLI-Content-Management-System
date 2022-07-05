@@ -30,12 +30,14 @@ into the command line after following installation instructions.
 To avoid errors when ENTERING data, ALWAYS enter your company's data in the following order: 
 1. Add departments before roles.  
 2. Add roles before employees. 
+
 To add a role, the corresponding department must already exist. 
 To add an employee, the corresponding role must already exist.
 
 To avoid errors when DELETING data, ALWAYS delete your company's data in the following order: 
 1. Delete employees before roles. 
 2. Delete roles before departments.
+
 To delete a department, the corresponding roles must first be deleted. 
 To delete a role, all corresponding employees must first be deleted. 
 
