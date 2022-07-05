@@ -18,7 +18,7 @@ npm install
 const connection
 ```
 - Create schema of database tables running all queries in ```schema.sql```
-- Run queries in ```seed.sql``` 
+
 
 ## Usage 
 Use this content management system to track your employees along with their departments, roles, salary and more. To run the program, enter:
